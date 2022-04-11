@@ -13,6 +13,11 @@
             <stringProp name="Argument.value">tarainteractive</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="remote" elementType="Argument">
+            <stringProp name="Argument.name">remote</stringProp>
+            <stringProp name="Argument.value">remote</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -357,19 +362,26 @@ var k = vars.get(&quot;k&quot;);
 log.info(k.toString());
 var title = vars.get(&quot;titles_&quot; + k);
 log.info(title);
-var titlee = title.replaceAll(&apos;&amp;#8211;&apos;,&apos; &apos;);  //remove &amp;#8211; care e echiv. caracterului –
-var titleee = titlee.replaceAll(/\s+/, &apos; &apos;); //replace multiple spaces with single space
-var titleeee = titleee.replaceAll(&apos; &apos;,&apos;-&apos;);
-//var titleee = titlee.replaceAll(/&amp;#8211;/,&apos; &apos;); 
-var link =&quot;https://www.tarainteractive.com/jobs/&quot;+titleeee+&quot;&quot;;
+var link =&quot;https://www.tarainteractive.com/careers/job-openings/&quot;;
 log.info(link);
 var city = vars.get(&quot;cities_&quot;+k);
+city = city.replaceAll(/[\W_&amp;&amp;[^\s]]/,&apos;&apos;);
+city = city.replaceAll(/\s+/,&apos;, &apos;);
+city = city.replaceAll(&apos;Bucharest&apos;, &apos;București&apos;);
+var remote = vars.get(&quot;remote&quot;);
+if(city.contains(&apos;Remote&apos;)== true){
+	city = city.replaceAll(&apos;, Remote&apos;,&apos;&apos;);
+	}else{
+		remote = &apos;&apos;;}
 log.info(city);
 var company = vars.get(&quot;company&quot;);
-String job=&apos;{&quot;id&quot;: &quot;&apos;+guid+&apos;&quot;,&quot;job_title&quot;: &quot;&apos;+title+&apos;&quot;,&quot;job_link&quot;: &quot;&apos;+link+&apos;&quot;, &quot;company&quot;: &quot;&apos;+company+&apos;&quot;,    &quot;country&quot;: &quot;România&quot;,&quot;city&quot;: &quot;&apos;+city+&apos;&quot; }&apos;;
+String job=&apos;{&quot;id&quot;: &quot;&apos;+guid+&apos;&quot;, &quot;remote&quot;: &quot;&apos;+remote+&apos;&quot;, &quot;job_title&quot;: &quot;&apos;+title+&apos;&quot;, &quot;job_link&quot;: &quot;&apos;+link+&apos;&quot;, &quot;company&quot;: &quot;&apos;+company+&apos;&quot;, &quot;country&quot;: &quot;România&quot;, &quot;city&quot;: &quot;&apos;+city+&apos;&quot; }&apos;;
+
 var joblist = vars.getObject(&quot;joblist&quot;);
 joblist = joblist + job;
 vars.putObject(&quot;joblist&quot;, joblist);
+
+//s-au stricat link-urile, las link ul mare de la pagina cu toate job urile sau incerc sa le scot iar separat?
 </stringProp>
               <stringProp name="scriptLanguage">groovy</stringProp>
             </JSR223Sampler>

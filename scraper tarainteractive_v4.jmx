@@ -371,6 +371,7 @@ log.info(link);
 var city = vars.get(&quot;cities_&quot;+k);
 city = city.replaceAll(/[\W_&amp;&amp;[^\s]]/,&apos;&apos;);
 city = city.replaceAll(/\s+/,&apos;, &apos;);
+city = city.replaceAll(&apos;Bucharest&apos;, &apos;București&apos;);
 var remote = vars.get(&quot;remote&quot;);
 if(city.contains(&apos;Remote&apos;)== true){
 	city = city.replaceAll(&apos;, Remote&apos;,&apos;&apos;);
