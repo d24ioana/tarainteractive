@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.3">
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.5">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -278,7 +278,16 @@ vars.putObject(&quot;joblist&quot;, joblist);</stringProp>
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="titles" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">titles</stringProp>
-              <stringProp name="RegexExtractor.regex">&lt;div class=&apos;title-job job-description&apos;&gt;(.+?)&lt;\/div&gt;&lt;div class=&apos;department&apos;&gt;(.+?)&lt;\/div&gt;</stringProp>
+              <stringProp name="RegexExtractor.regex">&lt;div class=&apos;title-job job-description&apos;&gt;&lt;a class =&apos;title-job&apos; href=&apos;(.+?)&apos;&gt;(.+?)&lt;/a&gt;&lt;/div&gt;&lt;div class=&apos;department&apos;&gt;(.+?)&lt;/div&gt;</stringProp>
+              <stringProp name="RegexExtractor.template">$2$</stringProp>
+              <stringProp name="RegexExtractor.default"></stringProp>
+              <stringProp name="RegexExtractor.match_number">-1</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="links" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">links</stringProp>
+              <stringProp name="RegexExtractor.regex">&lt;div class=&apos;title-job job-description&apos;&gt;&lt;a class =&apos;title-job&apos; href=&apos;(.+?)&apos;&gt;(.+?)&lt;/a&gt;&lt;/div&gt;&lt;div class=&apos;department&apos;&gt;(.+?)&lt;/div&gt;</stringProp>
               <stringProp name="RegexExtractor.template">$1$</stringProp>
               <stringProp name="RegexExtractor.default"></stringProp>
               <stringProp name="RegexExtractor.match_number">-1</stringProp>
@@ -366,8 +375,8 @@ var k = vars.get(&quot;k&quot;);
 log.info(k.toString());
 var title = vars.get(&quot;titles_&quot; + k);
 log.info(title);
-var link =&quot;https://www.tarainteractive.com/careers/job-openings/&quot;;
-log.info(link);
+
+
 var city = vars.get(&quot;cities_&quot;+k);
 city = city.replaceAll(/[\W_&amp;&amp;[^\s]]/,&apos;&apos;);
 city = city.replaceAll(/\s+/,&apos;, &apos;);
@@ -379,6 +388,7 @@ if(city.contains(&apos;Remote&apos;)== true){
 		remote = &apos;&apos;;}
 log.info(city);
 var company = vars.get(&quot;company&quot;);
+var link = vars.get(&quot;links_&quot;+k);
 String job=&apos;{&quot;id&quot;: &quot;&apos;+guid+&apos;&quot;, &quot;remote&quot;: &quot;&apos;+remote+&apos;&quot;, &quot;job_title&quot;: &quot;&apos;+title+&apos;&quot;, &quot;job_link&quot;: &quot;&apos;+link+&apos;&quot;, &quot;company&quot;: &quot;&apos;+company+&apos;&quot;, &quot;country&quot;: &quot;România&quot;, &quot;city&quot;: &quot;&apos;+city+&apos;&quot; }&apos;;
 
 var joblist = vars.getObject(&quot;joblist&quot;);
